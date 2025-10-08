@@ -53,6 +53,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api -->
+        <dependency>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>2.2.0-M1</version>
+        </dependency>
     </dependencies>
     
     <build>
