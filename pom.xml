@@ -53,6 +53,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!-- Biblioteca ZXing para gerar QR Codes -->
         <dependency>
             <groupId>com.google.zxing</groupId>
