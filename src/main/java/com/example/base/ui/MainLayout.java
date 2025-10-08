@@ -1,5 +1,6 @@
 package com.example.base.ui;
 
+import com.example.examplefeature.ui.QRCodeView; // ✅ importa a tua view de QR Codes
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
@@ -17,7 +18,7 @@ import static com.vaadin.flow.theme.lumo.LumoUtility.*;
 @Layout
 public final class MainLayout extends AppLayout {
 
-    MainLayout() {
+    public MainLayout() {
         setPrimarySection(Section.DRAWER);
         addToDrawer(createHeader(), new Scroller(createSideNav()));
     }
@@ -38,7 +39,14 @@ public final class MainLayout extends AppLayout {
     private SideNav createSideNav() {
         var nav = new SideNav();
         nav.addClassNames(Margin.Horizontal.MEDIUM);
+
+        // Adiciona as entradas automáticas já configuradas (ex: Task List)
         MenuConfiguration.getMenuEntries().forEach(entry -> nav.addItem(createSideNavItem(entry)));
+
+        // ✅ Adiciona manualmente a nova página de QR Codes
+        var qrCodeItem = new SideNavItem("QR Codes", QRCodeView.class, VaadinIcon.QRCODE.create());
+        nav.addItem(qrCodeItem);
+
         return nav;
     }
 
