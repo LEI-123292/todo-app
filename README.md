@@ -1,5 +1,7 @@
 # App README
 
+link video de demonstracao da ficha 3 setor C: https://youtu.be/fJ30m74Rg4M?si=TBb7zjGq9sBKSCwG
+
 - [ ] TODO Replace or update this README with instructions relevant to your application
 
 ## Project Structure
