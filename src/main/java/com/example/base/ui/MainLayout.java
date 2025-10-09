@@ -43,6 +43,7 @@ public final class MainLayout extends AppLayout {
         // Adiciona as entradas automáticas já configuradas (ex: Task List)
         MenuConfiguration.getMenuEntries().forEach(entry -> nav.addItem(createSideNavItem(entry)));
 
+        nav.addItem(new SideNavItem("Currency", "com/example/currency", new Icon(VaadinIcon.MONEY)));
         // ✅ Adiciona manualmente a nova página de QR Codes
         var qrCodeItem = new SideNavItem("QR Codes", QRCodeView.class, VaadinIcon.QRCODE.create());
         nav.addItem(qrCodeItem);
@@ -57,4 +58,6 @@ public final class MainLayout extends AppLayout {
             return new SideNavItem(menuEntry.title(), menuEntry.path());
         }
     }
+
+
 }
