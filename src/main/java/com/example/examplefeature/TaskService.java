@@ -33,4 +33,8 @@ public class TaskService {
         return taskRepository.findAllBy(pageable).toList();
     }
 
+    public List<Task> findAllTasks() {
+        // Presumindo que você tem uma variável 'taskRepository' injetada
+        return taskRepository.findAll();
+    }
 }
