@@ -16,6 +16,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.server.StreamResource;
+import com.example.examplefeature.PdfGenerator;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -67,7 +74,10 @@ class TaskListView extends Main {
         addClassNames(LumoUtility.BoxSizing.BORDER, LumoUtility.Display.FLEX, LumoUtility.FlexDirection.COLUMN,
                 LumoUtility.Padding.MEDIUM, LumoUtility.Gap.SMALL);
 
-        add(new ViewToolbar("Task List", ViewToolbar.group(description, dueDate, createBtn)));
+        var taskActions = ViewToolbar.group(description, dueDate, createBtn);
+        var actionsWithPdf = ViewToolbar.group(taskActions, createExportLink());
+
+        add(new ViewToolbar("Task List", actionsWithPdf));
         add(taskGrid);
     }
 
@@ -78,6 +88,37 @@ class TaskListView extends Main {
         dueDate.clear();
         Notification.show("Task added", 3000, Notification.Position.BOTTOM_END)
                 .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+    }
+
+    private Anchor createExportLink() {
+
+        // 1. Cria o recurso de Stream: Define o nome do ficheiro e como obter os bytes
+        StreamResource sr = new StreamResource("todo_list.pdf", () -> {
+            try {
+                // Obtém os dados e chama o seu gerador de PDF
+                // Nota: toSpringPageRequest é necessário para extrair o Stream<Task> corretamente
+                var allTasks = taskService.findAllTasks();
+
+                byte[] pdfBytes = PdfGenerator.createTaskListPdf(allTasks);
+
+                return new ByteArrayInputStream(pdfBytes);
+            } catch (IOException e) {
+                // Notificação de erro na UI
+                Notification.show("Erro ao gerar PDF: " + e.getMessage(), 5000, Notification.Position.BOTTOM_END)
+                        .addThemeVariants(NotificationVariant.LUMO_ERROR);
+                e.printStackTrace();
+                return new ByteArrayInputStream(new byte[0]);
+            }
+        });
+
+        // 2. Cria o Anchor (o elemento que permite o download)
+        Anchor downloadLink = new Anchor(sr, "");
+        downloadLink.getElement().setAttribute("download", true);
+
+        // 3. Coloca um botão dentro do Anchor
+        downloadLink.add(new Button("Exportar PDF"));
+
+        return downloadLink;
     }
 
 }
