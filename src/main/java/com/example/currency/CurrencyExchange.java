@@ -1,10 +1,13 @@
-package currency;
+package com.example.currency;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+@Service
 public class CurrencyExchange {
     private static final String API_URL = "https://api.frankfurter.app/latest";
     private final OkHttpClient client = new OkHttpClient();
@@ -23,7 +26,12 @@ public class CurrencyExchange {
             }
             String jsonData = response.body().string();
             JsonNode root = mapper.readTree(jsonData);
-            return root.get("rates").get(to).asDouble();
+            // Frankfurter returns "rates": { "USD": value }
+            JsonNode rates = root.get("rates");
+            if (rates == null || rates.get(to) == null) {
+                throw new RuntimeException("Moeda não encontrada na resposta da API.");
+            }
+            return rates.get(to).asDouble();
         }
     }
 }

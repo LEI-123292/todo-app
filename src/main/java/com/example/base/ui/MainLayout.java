@@ -39,6 +39,9 @@ public final class MainLayout extends AppLayout {
         var nav = new SideNav();
         nav.addClassNames(Margin.Horizontal.MEDIUM);
         MenuConfiguration.getMenuEntries().forEach(entry -> nav.addItem(createSideNavItem(entry)));
+
+        nav.addItem(new SideNavItem("Currency", "com/example/currency", new Icon(VaadinIcon.MONEY)));
+
         return nav;
     }
 
@@ -49,4 +52,6 @@ public final class MainLayout extends AppLayout {
             return new SideNavItem(menuEntry.title(), menuEntry.path());
         }
     }
+
+
 }
