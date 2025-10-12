@@ -1,8 +1,34 @@
 # App README
 
-link video de demonstracao da ficha 3 setor C: https://youtu.be/fJ30m74Rg4M?si=TBb7zjGq9sBKSCwG
+Link do vídeo de demonstração da ficha 3 setor C: https://youtu.be/fJ30m74Rg4M?si=TBb7zjGq9sBKSCwG
 
-- [ ] TODO Replace or update this README with instructions relevant to your application
+## Build.yml 
+
+Este projeto utiliza GitHub Actions para automatizar o processo de build e geração de artefactos. Sempre que é feito um push para a branch main, é executada automaticamente uma pipeline.
+
+- ✅Ambiente configurado (Java 21)
+```bash
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+```
+- ✅Build automático
+```bash
+    - name: Build with Maven
+      run: mvn clean package
+```
+- ✅Geração do jar
+- ✅Artefacto para download
+```bash
+    - name: Upload Jar artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: jar-file
+        path: target/*.jar
+```
 
 ## Project Structure
 
@@ -86,3 +112,6 @@ The [Getting Started](https://vaadin.com/docs/latest/getting-started) guide will
 App implementation. You'll learn how to set up your development environment, understand the project 
 structure, and find resources to help you add muscles to your skeleton — transforming it into a fully-featured 
 application.
+
+
+## 
