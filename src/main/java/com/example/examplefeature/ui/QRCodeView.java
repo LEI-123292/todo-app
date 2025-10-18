@@ -14,7 +14,6 @@ import java.io.IOException;
 
 import com.vaadin.flow.server.StreamResource;
 
-
 @PageTitle("Gerar QR Code")
 @Route(value = "qrcode", layout = com.example.base.ui.MainLayout.class)
 public class QRCodeView extends VerticalLayout {
