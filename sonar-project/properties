@@ -1,4 +1,4 @@
-sonar.organization=<o_teu_organization_key_no_sonarcloud>
-sonar.projectKey=<o_teu_project_key_no_sonarcloud>
+sonar.organization=<https://sonarcloud.io/project/overview?id=LEI-123292_todo-app>
+sonar.projectKey=<todo-app>
 sonar.projectName=todo-app
 sonar.java.binaries=target/classes
