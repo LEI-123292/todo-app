@@ -3,7 +3,7 @@ name: SonarQube Cloud Analysis
 on:
   push:
     branches:
-      - main   # analisar apenas a main
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Necessário para a análise correta
+          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -30,7 +30,7 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Build project (if Maven)
+      - name: Build project
         run: mvn clean compile -DskipTests
 
       - name: SonarQube Scan
@@ -38,7 +38,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          # Força a detecção do branch
           args: >
             -Dsonar.branch.name=main
 
