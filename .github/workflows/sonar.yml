@@ -3,7 +3,7 @@ name: SonarQube Cloud Analysis
 on:
   push:
     branches:
-      - '**'   # Analisa todas as branches, incluindo 'Cruz'
+      - main   # analisar apenas a main
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -23,10 +23,24 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Cache SonarQube packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build project (if Maven)
+        run: mvn clean compile -DskipTests
+
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          # Força a detecção do branch
+          args: >
+            -Dsonar.branch.name=main
 
       - name: SonarQube Quality Gate Check
         id: sonarqube-quality-gate-check
