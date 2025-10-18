@@ -18,6 +18,9 @@ import com.vaadin.flow.server.StreamResource;
 @Route(value = "qrcode", layout = com.example.base.ui.MainLayout.class)
 public class QRCodeView extends VerticalLayout {
 
+    public QRCodeView() {
+        setAlignItems(Alignment.CENTER);
+        setPadding(true);
 
         TextField textField = new TextField("Texto para o QR Code");
         Button generateButton = new Button("Gerar QR Code");
